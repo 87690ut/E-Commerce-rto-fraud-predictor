@@ -19,6 +19,7 @@
             background-size: cover;
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             /* Content ko center karne ke liye */
             align-items: center;
@@ -88,6 +89,10 @@
             box-shadow: 0 0 5px rgba(23, 12, 236, 0.605);
 
         }
+
+        .predic {
+            font-style: roboto;
+        }
     </style>
 </head>
 
@@ -139,7 +144,7 @@
 
     </form>
 
-    <h3>{{prediction_text}}</h3>
+    <h4 class="predic">{{prediction_text}}</h3>
 </body>
 
 </html>
