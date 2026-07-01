@@ -31,6 +31,7 @@
 
         /* Form ka design yahan hai */
         .order-form {
+            margin-top: 40px;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             width: 35%;
             height: 85%;
@@ -92,13 +93,17 @@
 
         .predic {
             font-style: roboto;
+            border: 2px solid blue;
+            padding: 10px;
+            border-radius: 7px;
+
         }
     </style>
 </head>
 
 <body class="page-body">
 
-    <form method="POST" class="order-form" action="/predict">
+    <form id="predictionForm" class="order-form">
 
         <label>Mobile OTP Verification</label>
         <select name="Is_Verified_Mobile" required class="form-input">
@@ -109,7 +114,7 @@
 
         <label class="form-label" for="item1">Mobile No.</label>
         <input type="tel" maxlength="10" pattern="[0-9]{10}" id="item4" name="mobile_no" class="form-input"
-            placeholder="Enter your Mobile No." title="Please enter 10 digit mobile no.">
+            placeholder="Enter your Mobile No." title="Please enter 10 digit mobile no." required>
 
 
         <label for="Payment_Type:" class="form-label">Payment Type</label>
@@ -124,11 +129,12 @@
 
 
         <label class="form-label" for="item3" id="item2">Cancellation History</label>
-        <input type="number" id="item2" name="Return_Count" class="form-input" placeholder="Enter Cancellation History">
+        <input type="number" id="item2" name="Return_Count" class="form-input" placeholder="Enter Cancellation History"
+            required>
 
 
         <label class="form-label" for="item4">Order Amount</label>
-        <input type="number" id="item3" name="Order_Value" class="form-input" placeholder="Enter Order Amount">
+        <input type="number" id="item3" name="Order_Value" class="form-input" placeholder="Enter Order Amount" required>
 
 
 
@@ -144,7 +150,26 @@
 
     </form>
 
-    <h4 class="predic">{{prediction_text}}</h3>
+    <h4 id="result_text" class="predic"></h4>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result_text').textContent = data.prediction_text;
+                    document.getElementById('predictionForm').reset(); // Form reset after submission
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
 </body>
 
 </html>

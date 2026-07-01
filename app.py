@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import joblib
 
@@ -34,6 +34,6 @@ def predict():
         else:
             result_text = "✅Safe Order. No RTO/Fraud Detected"
 
-    return render_template('index.html', prediction_text=result_text)
+    return jsonify({'prediction_text': result_text})
 if __name__ == '__main__':
     app.run(debug=True)
