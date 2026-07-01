@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Form</title>
-    <link rel="icon" type="image/png" href="web_favicon.png">
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='web_favicon.png') }}">
     <style>
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -13,9 +13,9 @@
             margin: 0;
         }
 
-        /* Body ka design yahan hai */
+
         .page-body {
-            background-image: url('back.png');
+            background-image: url("{{url_for('static', filename='back.png') }}");
             background-size: cover;
             font-family: Arial, sans-serif;
             display: flex;
@@ -26,7 +26,7 @@
             height: 95vh;
             font-weight: 600;
             margin: 0;
-            /* Default margin hatane ke liye taaki scroll bar na aaye */
+
         }
 
         /* Form ka design yahan hai */
