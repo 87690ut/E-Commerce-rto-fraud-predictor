@@ -32,9 +32,9 @@
         .order-form {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             width: 35%;
-            height: 80%;
+            height: 85%;
             border: rgba(255, 255, 255, 0.3);
-            padding: 15px;
+            padding: 10px;
             border-radius: 15px;
             display: flex;
             flex-direction: column;
@@ -49,12 +49,12 @@
 
         /* Text/Labels ke liye thodi spacing */
         .form-label {
-            margin-top: 13px;
+            margin-top: 5px;
 
         }
 
         .sub {
-            margin-top: 20px;
+            margin-top: 15px;
             padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
@@ -75,7 +75,7 @@
         .form-input {
             width: 70%;
             margin: 10px;
-            padding: 13px;
+            padding: 12px;
             box-sizing: border-box;
             border: 1.8px solid #b8b0b06a;
             border-radius: 5px;
@@ -93,7 +93,14 @@
 
 <body class="page-body">
 
-    <form method="post" class="order-form">
+    <form method="POST" class="order-form" action="/predict">
+
+        <label>Mobile OTP Verification</label>
+        <select name="Is_Verified_Mobile" required class="form-input">
+            <option value="" selected>Select Verification Status</option>
+            <option value="True">Yes (Verified)</option>
+            <option value="False">No (Not Verified)</option>
+        </select>
 
         <label class="form-label" for="item1">Mobile No.</label>
         <input type="tel" maxlength="10" pattern="[0-9]{10}" id="item4" name="mobile_no" class="form-input"
@@ -101,7 +108,7 @@
 
 
         <label for="Payment_Type:" class="form-label">Payment Type</label>
-        <select type="Payment_Type" id="item2" name="Payment_type" class="form-input" required>
+        <select type="Payment_Type" id="item2" name="Payment_Type" class="form-input" required>
             <option value="" selected>Select Payment Type</option>
             <option value="COD">COD</option>
             <option value="Credit Card">Credit Card</option>
@@ -112,26 +119,27 @@
 
 
         <label class="form-label" for="item3" id="item2">Cancellation History</label>
-        <input type="number" id="item2" name="cancellation_history" class="form-input"
-            placeholder="Enter Cancellation History">
+        <input type="number" id="item2" name="Return_Count" class="form-input" placeholder="Enter Cancellation History">
 
 
         <label class="form-label" for="item4">Order Amount</label>
-        <input type="number" id="item3" name="order_amount" class="form-input" placeholder="Enter Order Amount">
+        <input type="number" id="item3" name="Order_Value" class="form-input" placeholder="Enter Order Amount">
 
 
 
         <label class="form-label" for="city" id="item5">Enter your City</label>
-        <select type=" City" name="City" class="form-input" required>
+        <select type=" City" name="City_Tier" class="form-input" required>
             <option value="" selected>Select City</option>
             <option value="Metro City">Metro City</option>
             <option value="Urban">Urban</option>
             <option value="Rural">Rural</option>
         </select>
 
-        <input type="button" value="Submit" class="sub">
+        <input type="submit" value="Submit" class="sub">
 
     </form>
+
+    <h3>{{prediction_text}}</h3>
 </body>
 
 </html>
