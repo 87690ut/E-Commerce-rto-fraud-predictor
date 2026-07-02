@@ -20,13 +20,11 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             /* Content ko center karne ke liye */
             align-items: center;
             height: 95vh;
             font-weight: 600;
             margin: 0;
-
         }
 
         /* Form ka design yahan hai */
@@ -45,7 +43,8 @@
             /* 'top' ki jagah sahi flexbox property use ki hai */
             background-color: #ffffff62;
             box-shadow: 0 2px 5px rgba(1, 0, 0, 0.5);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(13px);
+            flex-shrink: 0;
         }
 
 
@@ -91,12 +90,20 @@
 
         }
 
-        .predic {
-            font-style: roboto;
-            border: 2px solid blue;
-            padding: 10px;
-            border-radius: 7px;
+        .result {
+            height: 50px;
+            width: 30%;
+            display: flex;
+            border: 2px solid green;
+            margin-top: 10px;
+            border-radius: 8px;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
 
+        #result_text {
+            margin: 0;
         }
     </style>
 </head>
@@ -150,7 +157,9 @@
 
     </form>
 
-    <h4 id="result_text" class="predic"></h4>
+    <div class="result">
+        <p id="result_text"></p>
+    </div>
 
     <script>
         document.getElementById('predictionForm').addEventListener('submit', function (event) {
