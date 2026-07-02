@@ -94,7 +94,7 @@
             height: 50px;
             width: 30%;
             display: flex;
-            border: 2px solid green;
+            border: 2px solid rgb(25, 11, 222);
             margin-top: 10px;
             border-radius: 8px;
             justify-content: center;
@@ -103,7 +103,9 @@
         }
 
         #result_text {
-            margin: 0;
+            margin: 3px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -173,6 +175,13 @@
                 .then(data => {
                     document.getElementById('result_text').textContent = data.prediction_text;
                     document.getElementById('predictionForm').reset(); // Form reset after submission
+
+                    let resultPara = document.getElementById('result_text');
+                    resultPara.style.opacity = 0;
+                    setTimeout(() => {
+                        resultPara.innerHTML = data.prediction_text;
+                        resultPara.style.opacity = 1;
+                    }, 300);
                 })
                 .catch(error => {
                     console.error('Error:', error);
