@@ -116,13 +116,14 @@
                 width: 85%;
                 padding: 6px;
                 height: 75%;
-
+                backdrop-filter: blur(12px);
 
             }
 
-            body {
+            .page-body {
                 font-size: 14px;
                 background-image: url("{{url_for('static', filename='mobile_bg.png') }}");
+                background-size: contain;
             }
 
             .form-input {
@@ -136,10 +137,12 @@
 
             .result {
                 font-size: 16px;
+                font-weight: 600;
                 width: 90%;
                 padding: 0px;
                 margin-top: 20px;
                 border: 1px solid blue;
+                backdrop-filter: blur(17px);
             }
 
 
