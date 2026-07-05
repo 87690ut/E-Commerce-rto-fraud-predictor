@@ -55,6 +55,13 @@ Building this wasn't a straight line. Here are the major architectural roadblock
 
 ---
 
+## 📊 Web Analytics & Traffic Monitoring
+
+To monitor real-world usage and track application traffic, this project integrates secure web analytics.
+
+- **Real-time User Traffic:** Actively monitors visitor sessions and interactions with the prediction model.
+- **Privacy-First Monitoring:** Captures essential usage patterns (such as device types, browsers, and regional traffic) while strictly adhering to data privacy standards (ensuring no sensitive personal identities are collected).
+
 ## 🤝 The "Human + AI" Pair Programming Philosophy
 
 I believe in complete transparency regarding how this project was built:
