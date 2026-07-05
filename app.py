@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import joblib
 import os
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -22,8 +23,16 @@ class OrderData(db.Model):
     city_tier = db.Column(db.String(50), nullable = False)
     prediction_result = db.Column(db.String(50), nullable = False)
 
+
+class VisitorLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ip_address = db.Column(db.String(100))
+    device_info = db.Column(db.String(300))
+    visit_time = db.Column(db.DateTime, default=datetime.utcnow)
+
 with app.app_context():
     db.create_all()
+
 
 
 
@@ -34,6 +43,13 @@ model = joblib.load('rto_model.pkl')
 
 @app.route('/')
 def home():
+    user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    user_device = request.headers.get('User-Agent')
+
+    new_visitor = VisitorLog(ip_address=user_ip, device_info=user_device)
+    db.session.add(new_visitor)
+    db.session.commit()
+
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
