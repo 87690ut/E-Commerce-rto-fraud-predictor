@@ -5,7 +5,7 @@ import joblib
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Uttam%239695@localhost:3306/rto_database'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://avnadmin:PASSWORD_HERE@mysql-2b0f9688-uttam9695-e1d8.j.aivencloud.com:25744/defaultdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
