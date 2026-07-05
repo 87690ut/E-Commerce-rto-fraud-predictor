@@ -4,6 +4,7 @@ import pandas as pd
 import joblib
 import os
 from datetime import datetime
+from user_agents import parse
 
 
 app = Flask(__name__)
@@ -44,9 +45,11 @@ model = joblib.load('rto_model.pkl')
 @app.route('/')
 def home():
     user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
-    user_device = request.headers.get('User-Agent')
-
-    new_visitor = VisitorLog(ip_address=user_ip, device_info=user_device)
+    raw_ua = request.headers.get('User-Agent')
+    
+    ua_parsed = parse(raw_ua)
+    clean_device = f"{ua_parsed.os.family} | {ua_parsed.browser.family} | {ua_parsed.device.family}"
+    new_visitor = VisitorLog(ip_address=user_ip, device_info=clean_device)
     db.session.add(new_visitor)
     db.session.commit()
 
