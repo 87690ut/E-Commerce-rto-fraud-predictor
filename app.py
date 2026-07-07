@@ -9,6 +9,7 @@ from user_agents import parse
 import smtplib
 import random
 from email.message import EmailMessage
+from dotenv import load_dotenv
 load_dotenv()
 
 
@@ -18,7 +19,7 @@ app = Flask(__name__)
 def send_email_otp(user_email):
     otp = str(random.randint(100000, 999999))
     msg = EmailMessage()
-    msg['Subject'] = 'E-Cpmmerce Fraud Predictior - Verification OTP'
+    msg['Subject'] = 'E-Commerce Fraud Predictor - Verification OTP'
     msg['From'] = os.environ.get('MY_EMAIL')
     msg['To'] = user_email
 
