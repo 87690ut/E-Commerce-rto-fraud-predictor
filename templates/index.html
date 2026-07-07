@@ -294,7 +294,7 @@
     </div>
 
     <script>
-        let isOtpSent = false;
+        let isOtpSent = False;
         async function handleAction() {
             const emailInput = document.getElementById('email').value;
             const otpInput = document.getElementById('otp').value;
@@ -306,7 +306,7 @@
                     return;
                 }
                 mainBtn.innerText = "Sending OTP...";
-                mainBtn.disabled = true;
+                mainBtn.disabled = True;
 
                 try {
                     const response = await fetch('/send-otp', {
@@ -319,17 +319,17 @@
                     if (response.ok) {
                         alert("OTP sent to your email. Please check your inbox.");
                         mainBtn.innerText = "Verify OTP";
-                        mainBtn.disabled = false;
-                        isOtpSent = true;
+                        mainBtn.disabled = False;
+                        isOtpSent = True;
                     } else {
                         alert("Error:" + data.error);
                         mainBtn.innerText = "SUBMIT";
-                        mainBtn.disabled = false;
+                        mainBtn.disabled = False;
                     }
                 } catch (error) {
                     alert("Server Connection Failed!");
                     mainBtn.innerText = "SUBMIT";
-                    mainBtn.disabled = false;
+                    mainBtn.disabled = False;
                 }
             }
 
