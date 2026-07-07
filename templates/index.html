@@ -290,7 +290,7 @@
 
         <label for="otp" class="lab">Enter OTP :</label>
         <input type="text" placeholder="Enter OTP" class="in" id="otp">
-        <button type="button" class="bt" id="otpverify" onclick="handleAction()">SUBMIT</button>
+        <button type="button" class="bt" id="mainBtn" onclick="handleAction()">SUBMIT</button>
     </div>
 
     <script>
@@ -298,7 +298,7 @@
         async function handleAction() {
             const emailInput = document.getElementById('email').value;
             const otpInput = document.getElementById('otp').value;
-            const mainBtn = document.getElementById('otpverify');
+            const mainBtn = document.getElementById('mainBtn');
 
             if (isOtpSent === False) {
                 if (emailInput === "") {
