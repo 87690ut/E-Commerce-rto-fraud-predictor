@@ -294,54 +294,82 @@
     </div>
 
     <script>
-        let isOtpSent = False;
+
+        let isOtpSent = false;
+
         async function handleAction() {
             const emailInput = document.getElementById('email').value;
             const otpInput = document.getElementById('otp').value;
             const mainBtn = document.getElementById('mainBtn');
 
-            if (isOtpSent === False) {
+            if (isOtpSent === false) {
                 if (emailInput === "") {
                     alert("Please enter your email address.");
                     return;
                 }
+
                 mainBtn.innerText = "Sending OTP...";
-                mainBtn.disabled = True;
+                mainBtn.disabled = true;
 
                 try {
-                    const response = await fetch('/send-otp', {
+                    const response = await fetch('/send_otp', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email: emailInput })
-
                     });
+
                     const data = await response.json();
+
                     if (response.ok) {
                         alert("OTP sent to your email. Please check your inbox.");
                         mainBtn.innerText = "Verify OTP";
-                        mainBtn.disabled = False;
-                        isOtpSent = True;
+                        mainBtn.disabled = false;
+                        isOtpSent = true;
                     } else {
-                        alert("Error:" + data.error);
+                        alert("Error: " + data.error);
                         mainBtn.innerText = "SUBMIT";
-                        mainBtn.disabled = False;
+                        mainBtn.disabled = false;
                     }
                 } catch (error) {
                     alert("Server Connection Failed!");
                     mainBtn.innerText = "SUBMIT";
-                    mainBtn.disabled = False;
+                    mainBtn.disabled = false;
                 }
             }
-
             else {
                 if (otpInput === "") {
                     alert("Please enter the OTP.");
                     return;
                 }
-                alert("Verifying OTP...");
+
+                mainBtn.innerText = "Verifying...";
+                mainBtn.disabled = true;
+
+                try {
+                    const response = await fetch('/verify_otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: emailInput, otp: otpInput })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alert("Email Verified Successfully!");
+                        document.querySelector('.Emfo').style.display = 'none';
+                        document.getElementById('predictionForm').style.display = 'flex';
+                    } else {
+                        alert("Incorrect OTP: " + data.error);
+                        mainBtn.innerText = "Verify OTP";
+                        mainBtn.disabled = false;
+                    }
+                } catch (error) {
+                    alert("Verification Server Error!");
+                    mainBtn.innerText = "Verify OTP";
+                    mainBtn.disabled = false;
+                }
             }
         }
-
 
 
 
