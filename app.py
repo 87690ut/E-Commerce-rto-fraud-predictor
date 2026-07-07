@@ -1,13 +1,42 @@
 from flask import Flask, render_template, request, jsonify
+from flask.cli import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import joblib
 import os
 from datetime import datetime
 from user_agents import parse
+import smtplib
+import random
+from email.message import EmailMessage
+load_dotenv()
+
 
 
 app = Flask(__name__)
+
+def send_email_otp(user_email):
+    otp = str(random.randint(100000, 999999))
+    msg = EmailMessage()
+    msg['Subject'] = 'E-Cpmmerce Fraud Predictior - Verification OTP'
+    msg['From'] = os.environ.get('MY_EMAIL')
+    msg['To'] = user_email
+
+    msg.set_content(f"Hello, \n\nYour OTP for verification is: {otp}\n\n Do not share with anyone, Thank you for using our service!")
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(os.environ.get('MY_EMAIL'), os.environ.get('EMAIL_APP_PASSWORD'))
+
+        server.send_message(msg)
+        server.quit()
+
+        print("OTP email sent successfully!")
+        return otp
+    except Exception as e:
+        print(f"Failed to send OTP email: {e}")
+        return None
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -54,6 +83,23 @@ def home():
     db.session.commit()
 
     return render_template('index.html')
+
+@app.route('/send_otp', methods=['POST'])
+def send_otp_route():
+    try:
+        data = request.get_json()
+        user_email = data.get('email')
+        if not user_email:
+            return jsonify({'error': 'Email is required'}), 400
+        
+        generated_otp = send_email_otp(user_email)
+        
+        if generated_otp:
+            return jsonify({'Message': "OTP sent successfully to your email. Please check your inbox."}), 200
+        else:
+            return jsonify({'error': 'Failed to send OTP. Please try again later.'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/predict', methods=['POST'])
 def predict():
