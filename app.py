@@ -11,6 +11,7 @@ import random
 from email.message import EmailMessage
 from dotenv import load_dotenv
 load_dotenv()
+import requests
 
 
 
@@ -18,23 +19,37 @@ app = Flask(__name__)
 
 def send_email_otp(user_email):
     otp = str(random.randint(100000, 999999))
-    msg = EmailMessage()
-    msg['Subject'] = 'E-Commerce Fraud Predictor - Verification OTP'
-    msg['From'] = os.environ.get('MY_EMAIL')
-    msg['To'] = user_email
+    
+    api_key = os.environ.get('BREVO_API_KEY')
+    sender_email = os.environ.get('MY_EMAIL')
 
-    msg.set_content(f"Hello, \n\nYour OTP for verification is: {otp}\n\n Do not share with anyone, Thank you for using our service!")
+    url = "https://api.brevo.com/v3/smtp/email"
+    
+    headers = {
+        "accept": "application/json",
+        "api-key": api_key,
+        "content-type": "application/json"
+    }
+    
+
+    payload = {
+        "sender": {"email": sender_email, "name": "Fraud Predictor"},
+        "to": [{"email": user_email}],
+        "subject": "E-Commerce Fraud Predictor - Verification OTP",
+        "htmlContent": f"<html><body><p>Hello,</p><p>Your OTP for verification is: <strong>{otp}</strong></p><p>Do not share it with anyone.</p></body></html>"
+    }
 
     try:
-        server = smtplib.SMTP('smtp.gmail.com', 465)
-        server.login(os.environ.get('MY_EMAIL'), os.environ.get('EMAIL_APP_PASSWORD'))
-        server.send_message(msg)
-        server.quit()
-
-        print("OTP email sent successfully!")
-        return otp
+        response = requests.post(url, json=payload, headers=headers)
+        
+        if response.status_code == 201:
+            print("OTP sent successfully via Brevo API!")
+            return otp
+        else:
+            print(f"Brevo API Error: {response.text}")
+            return None
     except Exception as e:
-        print(f"Failed to send OTP email: {e}")
+        print(f"Failed to send OTP via API: {e}")
         return None
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
