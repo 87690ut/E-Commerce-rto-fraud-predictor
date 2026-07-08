@@ -217,6 +217,7 @@
                 margin-top: 20px;
                 border: 1px solid blue;
                 backdrop-filter: blur(20px);
+                display: none;
             }
 
 
@@ -273,7 +274,7 @@
 
     </form>
 
-    <div class="result">
+    <div class="result" id="rslt">
         <p id="result_text"></p>
     </div>
 
@@ -358,6 +359,7 @@
 
                         const emfoForm = document.querySelector('.Emfo');
                         const predForm = document.getElementById('predictionForm');
+                        const rslt = document.getElementById('rslt');
 
                         emfoForm.style.transition = "opacity 0.5s ease";
                         emfoForm.style.opacity = "0";
@@ -369,8 +371,13 @@
                             predForm.style.display = "flex";
                             predForm.style.transition = "opacity 0.5s ease";
 
+                            rslt.style.opacity = "0";
+                            rslt.style.display = "flex";
+                            rslt.style.transition = "opacity 0.5s ease";
+
                             setTimeout(() => {
                                 predForm.style.opacity = "1";
+                                rslt.style.opacity = "1";
                             }, 50);
 
                         }, 500);
