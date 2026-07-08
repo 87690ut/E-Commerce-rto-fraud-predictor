@@ -294,7 +294,6 @@
     </div>
 
     <script>
-
         let isOtpSent = false;
 
         async function handleAction() {
@@ -356,8 +355,26 @@
 
                     if (response.ok) {
                         alert("Email Verified Successfully!");
-                        document.querySelector('.Emfo').style.display = 'none';
-                        document.getElementById('predictionForm').style.display = 'flex';
+
+                        const emfoForm = document.querySelector('.Emfo');
+                        const predForm = document.getElementById('predictionForm');
+
+                        emfoForm.style.transition = "opacity 0.5s ease";
+                        emfoForm.style.opacity = "0";
+
+                        setTimeout(() => {
+                            emfoForm.style.display = "none";
+
+                            predForm.style.opacity = "0";
+                            predForm.style.display = "flex";
+                            predForm.style.transition = "opacity 0.5s ease";
+
+                            setTimeout(() => {
+                                predForm.style.opacity = "1";
+                            }, 50);
+
+                        }, 500);
+
                     } else {
                         alert("Incorrect OTP: " + data.error);
                         mainBtn.innerText = "Verify OTP";

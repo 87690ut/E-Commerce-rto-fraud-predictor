@@ -44,6 +44,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+temp_otp_store = {}
+
 class OrderData(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     mobile_no = db.Column(db.String(15), nullable= False)
@@ -96,11 +98,27 @@ def send_otp_route():
         generated_otp = send_email_otp(user_email)
         
         if generated_otp:
+            temp_otp_store[user_email] = generated_otp
             return jsonify({'Message': "OTP sent successfully to your email. Please check your inbox."}), 200
         else:
             return jsonify({'error': 'Failed to send OTP. Please try again later.'}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+
+@app.route('/verify_otp', methods=['POST'])
+def verify_otp():
+    data = request.get_json()
+    email = data.get('email')
+    user_otp = data.get('otp')
+
+    if email in temp_otp_store and temp_otp_store[email] == str(user_otp):
+
+        del temp_otp_store[email]
+        return jsonify({"message": "Email Verified Successfully!"}), 200
+    else:
+        return jsonify({"error": "Invalid OTP"}), 400
 
 @app.route('/predict', methods=['POST'])
 def predict():
