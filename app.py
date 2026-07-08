@@ -26,10 +26,8 @@ def send_email_otp(user_email):
     msg.set_content(f"Hello, \n\nYour OTP for verification is: {otp}\n\n Do not share with anyone, Thank you for using our service!")
 
     try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
+        server = smtplib.SMTP('smtp.gmail.com', 465)
         server.login(os.environ.get('MY_EMAIL'), os.environ.get('EMAIL_APP_PASSWORD'))
-
         server.send_message(msg)
         server.quit()
 
