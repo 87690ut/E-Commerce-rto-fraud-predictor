@@ -198,7 +198,7 @@
             background-color: rgba(21, 183, 132, 0.914);
             color: white;
             align-self: flex-start;
-            margin-left: 12%;
+            margin-left: 11%;
         }
 
 
@@ -442,6 +442,8 @@
                             rslt.style.display = "flex";
                             rslt.style.transition = "opacity 0.5s ease";
                             document.body.style.backgroundImage = "url('{{url_for('static', filename='back.png') }}')";
+                            document.body.style.backgroundSize = "cover";
+                            document.body.style.backgroundPosition = "center";
 
                             setTimeout(() => {
                                 predForm.style.opacity = "1";
