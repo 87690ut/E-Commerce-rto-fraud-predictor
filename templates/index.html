@@ -15,8 +15,10 @@
 
 
         .page-body {
-            background-image: url("{{url_for('static', filename='back.png') }}");
+            background-image: url("{{url_for('static', filename='otp_bg.png') }}");
             background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -437,6 +439,7 @@
                             rslt.style.opacity = "0";
                             rslt.style.display = "flex";
                             rslt.style.transition = "opacity 0.5s ease";
+                            document.body.style.backgroundImage = "url('{{url_for('static', filename='back.png') }}')";
 
                             setTimeout(() => {
                                 predForm.style.opacity = "1";
