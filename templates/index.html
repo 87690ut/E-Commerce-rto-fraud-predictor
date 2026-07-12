@@ -221,6 +221,11 @@
                 background-size: cover;
             }
 
+            body.step-2 {
+                background-image: url("{{url_for('static', filename= 'mobile_bg.png') }}");
+                background-size: cover;
+            }
+
             .form-input {
                 width: 90%;
                 padding: 10px;
@@ -458,6 +463,7 @@
                             document.body.style.backgroundImage = "url('{{url_for('static', filename='back.png') }}')";
                             document.body.style.backgroundSize = "cover";
                             document.body.style.backgroundPosition = "center";
+                            document.body.classList.add("step-2");
 
                             setTimeout(() => {
                                 predForm.style.opacity = "1";
