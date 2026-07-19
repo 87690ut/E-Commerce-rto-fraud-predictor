@@ -33,10 +33,10 @@ def send_email_otp(user_email):
     
 
     payload = {
-        "sender": {"email": sender_email, "name": "Fraud Predictor"},
+        "sender": {"email": sender_email, "name": "Uttam's Fraud Predictor Tool"},
         "to": [{"email": user_email}],
-        "subject": "E-Commerce Fraud Predictor - Verification OTP",
-        "htmlContent": f"<html><body><p>Hello,</p><p>Your OTP for verification is: <strong>{otp}</strong></p><p>Do not share it with anyone.</p></body></html>"
+        "subject": "Uttam's E-Commerce Fraud Predictor - Verification OTP",
+        "htmlContent": f"<html><body><p>Hello,</p><p>Your OTP for verification is: <strong>{otp}</strong></p><p>Do not share it with anyone. Requested by developer UTTAM.</p></body></html>"
     }
 
     try:
@@ -112,7 +112,7 @@ def send_otp_route():
         
         if generated_otp:
             temp_otp_store[user_email] = generated_otp
-            return jsonify({'Message': "OTP sent successfully to your email. Please check your inbox."}), 200
+            return jsonify({'Message': "OTP sent successfully to your email, Please check your inbox."},), 200
         else:
             return jsonify({'error': 'Failed to send OTP. Please try again later.'}), 500
     except Exception as e:
